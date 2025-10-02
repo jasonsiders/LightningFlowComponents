@@ -653,16 +653,12 @@ export default class Datatable extends LightningElement {
         return this._apex_picklistFieldMap || [];
     }
     set apex_picklistFieldMap(value) {
-        // Parse JSON string if provided, otherwise use the value as-is
-        if (typeof value === 'string' && value.trim().length > 0) {
-            try {
-                this._apex_picklistFieldMap = JSON.parse(value);
-            } catch (e) {
-                console.error('Error parsing apex_picklistFieldMap JSON:', e);
-                this._apex_picklistFieldMap = [];
-            }
-        } else {
-            this._apex_picklistFieldMap = value || [];
+        try {
+            const isValidString = (typeof value === "string" && value?.trim()?.length > 0);
+            this._apex_picklistFieldMap = (isValidString) ? JSON.parse(value) : [];
+        } catch (e) {
+            console.log('Error parsing apex_picklistFieldMap:', e);
+            this._apex_picklistFieldMap = [];
         }
     }
     _apex_picklistFieldMap = [];
