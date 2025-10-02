@@ -647,8 +647,44 @@ export default class Datatable extends LightningElement {
     dateFieldArray = [];
     datetimeFieldArray = [];
     @api picklistFieldArray = [];
-    @api picklistReplaceValues = false;     
-    apex_picklistFieldMap = [];
+    @api picklistReplaceValues = false;
+    @api
+    get apex_picklistFieldMap() {
+        return this._apex_picklistFieldMap || [];
+    }
+    set apex_picklistFieldMap(value) {
+        try {
+            const isValidString = (typeof value === 'string' && value?.trim()?.length > 0);
+            this._apex_picklistFieldMap = (isValidString) ? this.convertPicklistFormat(JSON.parse(value)) : [];
+        } catch (e) {
+            console.log('Error parsing apex_picklistFieldMap JSON:', e);
+            this._apex_picklistFieldMap = [];
+        }
+    }
+    _apex_picklistFieldMap = [];
+
+    convertPicklistFormat(picklistMap) {
+        // Convert from user-friendly format: {"fieldName": [{"label":"...", "value":"..."}]}
+        // To internal format: {"fieldName": {"label": "value"}}
+        const converted = {};
+        Object.keys(picklistMap).forEach(fieldName => {
+            const fieldValues = picklistMap[fieldName];
+            if (Array.isArray(fieldValues)) {
+                // Convert array format to object format
+                converted[fieldName] = {};
+                fieldValues?.forEach(item => {
+                    if (item?.label && item?.hasOwnProperty('value')) {
+                        converted[fieldName][item?.label] = item?.value;
+                    }
+                });
+            } else {
+                // Already in internal format, use as-is
+                converted[fieldName] = fieldValues;
+            }
+        });
+        return converted;
+    }
+
     @api picklistMap = [];
     @api edits = [];
     @api isEditAttribSet = false;
@@ -1712,6 +1748,12 @@ export default class Datatable extends LightningElement {
                     if (!this.typeAttrib) {
                         this.typeAttrib = [];
                         this.typeAttrib.type = type;
+                    }
+
+                    // Convert 'picklist' to 'combobox' if manual picklist values are provided
+                    if (this.typeAttrib.type === 'picklist' && this.apex_picklistFieldMap && this.apex_picklistFieldMap[fieldName]) {
+                        this.typeAttrib.type = 'combobox';
+                        type = 'combobox';
                     }
                 }
             }
