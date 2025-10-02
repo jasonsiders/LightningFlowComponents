@@ -522,7 +522,7 @@ export default class ers_datatableCPE extends LightningElement {
         preSelectedRowsString: {value: null, valueDataType: null, isCollection: false, label: 'Pre-Selected Rows String',
             helpText: 'Object Collection string variable containing the records to show as pre-selected in the datatable.'},
         apex_picklistFieldMap: {value: null, valueDataType: null, isCollection: false, label: 'Column Picklist Values (Apex-Defined Only)',
-            helpText: 'JSON string containing picklist values for user-defined objects. Format: {"fieldName":{"Label1":"Value1","Label2":"Value2"}} Example: {"Role":{"Decision Maker":"Decision Maker","Evaluator":"Evaluator","--None--":""}}'},
+            helpText: 'JSON string containing picklist values for user-defined objects. Format: {"fieldName":[{"label":"Label1","value":"Value1"}]}'},
         columnFields: {value: null, valueDataType: null, isCollection: false, label: 'Column Fields', 
             helpText: "REQUIRED: Comma separated list of field API Names to display in the datatable.",
             isError: false, errorMessage: null},  
