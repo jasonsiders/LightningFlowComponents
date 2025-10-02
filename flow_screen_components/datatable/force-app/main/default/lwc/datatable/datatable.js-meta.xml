@@ -39,7 +39,6 @@
             <property name="serializedRecordData" label="_ (User Defined)  Display Serialized Record?" type="String" default="false" role="inputOnly" description="String variable containing the records. Serialized record data."/>
             <property name="isSerializedRecordData" type="Boolean" role="inputOnly"/>
             <property name="cb_isSerializedRecordData" type="String" role="inputOnly"/>
-            <property name="apex_picklistFieldMap" label="_ (User Defined) Picklist Field Map" type="String" role="inputOnly" description="JSON string containing picklist values for user-defined objects. Format: {&quot;fieldName&quot;:{&quot;Label1&quot;:&quot;Value1&quot;,&quot;Label2&quot;:&quot;Value2&quot;}} Example: {&quot;Role&quot;:{&quot;Decision Maker&quot;:&quot;Decision Maker&quot;,&quot;Evaluator&quot;:&quot;Evaluator&quot;,&quot;--None--&quot;:&quot;&quot;}}"/>
             <!-- =========== Outputs =========== -->
             <property name="outputSelectedRowsString" label="Output Selected Rows (User Defined)" type="String" role="outputOnly" description="Object Collection string variable to contain only the records that were selected in the datatable. 
                 --  NOTE: These records may not contain all of the edited values."/>
