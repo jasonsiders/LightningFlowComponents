@@ -650,7 +650,7 @@ export default class Datatable extends LightningElement {
     @api picklistReplaceValues = false;
     @api
     get apex_picklistFieldMap() {
-        return this._apex_picklistFieldMap || [];
+        return this._apex_picklistFieldMap || {};
     }
     set apex_picklistFieldMap(value) {
         try {
@@ -661,7 +661,7 @@ export default class Datatable extends LightningElement {
             this._apex_picklistFieldMap = [];
         }
     }
-    _apex_picklistFieldMap = [];
+    _apex_picklistFieldMap = {};
 
     convertPicklistFormat(picklistMap) {
         // Convert from user-friendly format: {"fieldName": [{"label":"...", "value":"..."}]}
@@ -672,9 +672,9 @@ export default class Datatable extends LightningElement {
             if (Array.isArray(fieldValues)) {
                 // Convert array format to object format
                 converted[fieldName] = {};
-                fieldValues?.forEach(item => {
-                    if (item?.label && item?.hasOwnProperty('value')) {
-                        converted[fieldName][item?.label] = item?.value;
+                fieldValues.forEach(item => {
+                    if (item?.label != null && item?.value != null) {
+                        converted[fieldName][item.label] = item.value;
                     }
                 });
             } else {
