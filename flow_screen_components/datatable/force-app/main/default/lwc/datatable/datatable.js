@@ -647,8 +647,25 @@ export default class Datatable extends LightningElement {
     dateFieldArray = [];
     datetimeFieldArray = [];
     @api picklistFieldArray = [];
-    @api picklistReplaceValues = false;     
-    apex_picklistFieldMap = [];
+    @api picklistReplaceValues = false;
+    @api
+    get apex_picklistFieldMap() {
+        return this._apex_picklistFieldMap || [];
+    }
+    set apex_picklistFieldMap(value) {
+        // Parse JSON string if provided, otherwise use the value as-is
+        if (typeof value === 'string' && value.trim().length > 0) {
+            try {
+                this._apex_picklistFieldMap = JSON.parse(value);
+            } catch (e) {
+                console.error('Error parsing apex_picklistFieldMap JSON:', e);
+                this._apex_picklistFieldMap = [];
+            }
+        } else {
+            this._apex_picklistFieldMap = value || [];
+        }
+    }
+    _apex_picklistFieldMap = [];
     @api picklistMap = [];
     @api edits = [];
     @api isEditAttribSet = false;
@@ -1712,6 +1729,12 @@ export default class Datatable extends LightningElement {
                     if (!this.typeAttrib) {
                         this.typeAttrib = [];
                         this.typeAttrib.type = type;
+                    }
+
+                    // Convert 'picklist' to 'combobox' if manual picklist values are provided
+                    if (this.typeAttrib.type === 'picklist' && this.apex_picklistFieldMap && this.apex_picklistFieldMap[fieldName]) {
+                        this.typeAttrib.type = 'combobox';
+                        type = 'combobox';
                     }
                 }
             }
