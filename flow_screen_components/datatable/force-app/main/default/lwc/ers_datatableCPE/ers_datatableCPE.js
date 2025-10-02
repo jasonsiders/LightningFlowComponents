@@ -521,6 +521,8 @@ export default class ers_datatableCPE extends LightningElement {
             helpText: 'Object Collection string variable containing the records to display in the datatable.'},
         preSelectedRowsString: {value: null, valueDataType: null, isCollection: false, label: 'Pre-Selected Rows String', 
             helpText: 'Object Collection string variable containing the records to show as pre-selected in the datatable.'},
+        apex_picklistFieldMap: {value: null, valueDataType: null, isCollection: false, label: 'Column Picklist Values (Apex-Defined Only)',
+            helpText: 'JSON string containing picklist values for user-defined objects. Format: {"fieldName":{"Label1":"Value1","Label2":"Value2"}} Example: {"Role":{"Decision Maker":"Decision Maker","Evaluator":"Evaluator","--None--":""}}'},
         columnFields: {value: null, valueDataType: null, isCollection: false, label: 'Column Fields', 
             helpText: "REQUIRED: Comma separated list of field API Names to display in the datatable.",
             isError: false, errorMessage: null},  
@@ -718,7 +720,7 @@ export default class ers_datatableCPE extends LightningElement {
                     '{"field1":"StringRec3Value1","field2":"StringRec3Value2","field3":true,"field4":30}]'},
                 {name: 'tableDataString'},
                 {name: 'preSelectedRowsString'},
-                {name: defaults.customHelpDefinition, 
+                {name: defaults.customHelpDefinition,
                     label: 'For more information on using Apex Defined Objects with Datatable',
                     helpText: 'https://ericsplayground.wordpress.com/how-to-use-an-apex-defined-object-with-my-datatable-flow-component/'}
             ]
@@ -802,6 +804,7 @@ export default class ers_datatableCPE extends LightningElement {
                 {name: 'columnFlexes'},
                 {name: 'columnWraps'},
                 {name: 'columnCellAttribs'},
+                {name: 'apex_picklistFieldMap'},
                 {name: 'columnTypeAttribs'},
                 {name: 'columnOtherAttribs'},
                 {name: 'recordTypeId'},
