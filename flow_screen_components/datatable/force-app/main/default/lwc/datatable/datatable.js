@@ -672,9 +672,9 @@ export default class Datatable extends LightningElement {
             if (Array.isArray(fieldValues)) {
                 // Convert array format to object format
                 converted[fieldName] = {};
-                fieldValues.forEach(item => {
-                    if (item?.label != null && item?.value != null) {
-                        converted[fieldName][item.label] = item.value;
+                fieldValues?.forEach(item => {
+                    if (item?.label && item?.hasOwnProperty('value')) {
+                        converted[fieldName][item?.label] = item?.value;
                     }
                 });
             } else {
