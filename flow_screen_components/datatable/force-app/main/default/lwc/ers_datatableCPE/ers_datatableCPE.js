@@ -720,7 +720,7 @@ export default class ers_datatableCPE extends LightningElement {
                     '{"field1":"StringRec3Value1","field2":"StringRec3Value2","field3":true,"field4":30}]'},
                 {name: 'tableDataString'},
                 {name: 'preSelectedRowsString'},
-                {name: defaults.customHelpDefinition,
+                {name: defaults.customHelpDefinition, 
                     label: 'For more information on using Apex Defined Objects with Datatable',
                     helpText: 'https://ericsplayground.wordpress.com/how-to-use-an-apex-defined-object-with-my-datatable-flow-component/'}
             ]
