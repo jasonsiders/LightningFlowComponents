@@ -1390,11 +1390,13 @@ export default class Datatable extends LightningElement {
                 if (this.picklistReplaceValues) {
                     let noMatch = false;
                     this.picklistFieldArray.forEach(picklist => {
-                        Object.keys(this.apex_picklistFieldMap[picklist]).forEach(map => {                         
-                            if (map != this.apex_picklistFieldMap[picklist][map]) {                              
-                                noMatch = true;
-                            }
-                        });
+                        if (this.picklistFieldMap[picklist]) {
+                            Object.keys(this.picklistFieldMap[picklist]).forEach(map => {
+                                if (map != this.picklistFieldMap[picklist][map]) {
+                                    noMatch = true;
+                                }
+                            });
+                        }
                     });
                     this.picklistReplaceValues = noMatch;
                 }
@@ -1554,10 +1556,10 @@ export default class Datatable extends LightningElement {
             // Handle replacement of Picklist API Names with Labels
             if (this.picklistReplaceValues) {
                 picklistFields.forEach(picklist => {
-                    if (record[picklist]) {
+                    if (record[picklist] && this.picklistFieldMap[picklist]) {
                         let picklistLabels = [];
-                        record[picklist].split(';').forEach(picklistValue => {                    
-                            picklistLabels.push(this.apex_picklistFieldMap[picklist][picklistValue]);
+                        record[picklist].split(';').forEach(picklistValue => {
+                            picklistLabels.push(this.picklistFieldMap[picklist][picklistValue]);
                         });
                         record[picklist] = picklistLabels.join(';');
                     }
