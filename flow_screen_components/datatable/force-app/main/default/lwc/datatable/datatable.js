@@ -1750,10 +1750,14 @@ export default class Datatable extends LightningElement {
                         this.typeAttrib.type = type;
                     }
 
-                    // Convert 'picklist' to 'combobox' if manual picklist values are provided
-                    if (this.typeAttrib.type === 'picklist' && this.apex_picklistFieldMap && this.apex_picklistFieldMap[fieldName]) {
-                        this.typeAttrib.type = 'combobox';
-                        type = 'combobox';
+                    // Convert 'picklist' to 'combobox' if picklist values are available (from apex or wire service)
+                    if (this.typeAttrib.type === 'picklist') {
+                        const hasApexPicklistValues = this.apex_picklistFieldMap && this.apex_picklistFieldMap[fieldName];
+                        const hasWirePicklistValues = this._picklistData && this._picklistData.picklistFieldValues && this._picklistData.picklistFieldValues[fieldName];
+                        if (hasApexPicklistValues || hasWirePicklistValues) {
+                            this.typeAttrib.type = 'combobox';
+                            type = 'combobox';
+                        }
                     }
                 }
             }
